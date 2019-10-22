@@ -15,7 +15,7 @@ dic = {i:0 for i in range(510)}
 for i in range(10):
     path = os.getcwd()
     # 数据读取
-    train = pd.read_csv('3128.csv')
+    train = pd.read_csv('3128_3.csv')
     # test = pd.read_csv('D:\\code\\pycode\\laman\\test.csv')
 
     # encode
@@ -73,8 +73,8 @@ for i in range(10):
     model.add(Flatten())
     model.add(Dropout(0.4))
     # model.add(Dense(activation='relu'))
-    model.add(Dense(1024, activation='relu'))
-    model.add(Dense(512, activation = 'relu'))
+    model.add(Dense(512, activation='relu'))
+    model.add(Dense(128, activation = 'relu'))
     model.add(Dense(nb_class))
     model.add(Activation('softmax'))
     real_class = y_train
