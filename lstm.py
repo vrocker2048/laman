@@ -6,12 +6,9 @@ from keras.layers import LSTM, Dense
 import keras
 import tensorflow as tf
 
-# LabelEncoder 用来编码输出标签
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-# StratifiedShuffleSplit可以用来把数据集洗牌，并拆分成训练集和验证集
 from sklearn.model_selection import StratifiedShuffleSplit
-# 我们用的Keras版本是 2.0.1
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Flatten, Convolution1D, Dropout, Conv1D, MaxPool1D,Bidirectional,BatchNormalization
 from keras.optimizers import SGD
@@ -22,9 +19,6 @@ import matplotlib.pyplot as plt
 from keras.callbacks import ModelCheckpoint
 
 
-# 这个数据集是叶子leaf 品种的分类问题，有三个通道，
-# 每个通道64个比特位，一个通道代表边界特征，一个通道代表形状特征，最后一个通道代表材质特征，
-# 输出是叶子特征标签的预测
 
 class LossHistory(keras.callbacks.Callback):
     def on_train_begin(self, logs={}):
@@ -63,12 +57,12 @@ class LossHistory(keras.callbacks.Callback):
         plt.legend(loc="upper right")
         plt.show()
 
-train = pd.read_csv('D:\\pycode\\laman\\3000.csv')
+train = pd.read_csv('./3128.csv')
 # test = pd.read_csv('D:\\pycode\\laman\\test.csv')
 
 
 # def encode(train, test):
-#     # 用LabelEncoder为叶子的种类标签编码，labels对象是训练集上的标签列表
+#     
 #     label_encoder = LabelEncoder().fit(train.species)
 #     labels = label_encoder.transform(train.species)
 #     classes = list(label_encoder.classes_)
@@ -80,7 +74,7 @@ train = pd.read_csv('D:\\pycode\\laman\\3000.csv')
 
 
 def encode(train):
-    # 用LabelEncoder为叶子的种类标签编码，labels对象是训练集上的标签列表
+    
     label_encoder = LabelEncoder().fit(train.species)
     labels = label_encoder.transform(train.species)
     classes = list(label_encoder.classes_)
@@ -105,20 +99,8 @@ for train_index, valid_index in sss.split(scaled_train, labels):
 print(y_train)
 print('8'*20)
 print(y_valid)
-# 每个输入通道的大小是64位，一共3个通道
 nb_features = 3128
 nb_class = len(classes)
-#  把输入数据集reshape成keras喜欢的格式：（样本数，通道大小，通道数）
-# X_train_r = np.zeros((len(X_train), nb_features, 3))
-# # 这里的做法是先把所有元素初始化成0之后，再把刚才的数据集中的数据赋值过来
-# X_train_r[:, :, 0] = X_train[:, :nb_features]
-# X_train_r[:, :, 1] = X_train[:, nb_features:128]
-# X_train_r[:, :, 2] = X_train[:, 128:]
-# # 验证集也要reshape一下
-# X_valid_r = np.zeros((len(X_valid), nb_features, 3))
-# X_valid_r[:, :, 0] = X_valid[:, :nb_features]
-# X_valid_r[:, :, 1] = X_valid[:, nb_features:128]
-# X_valid_r[:, :, 2] = X_valid[:, 128:]
 
 
 
