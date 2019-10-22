@@ -13,7 +13,7 @@ import os
 
 path = os.getcwd()
 # 数据读取
-train = pd.read_csv('3128.csv')
+train = pd.read_csv('3128_reduce.csv')
 # test = pd.read_csv('D:\\code\\pycode\\laman\\test.csv')
 
 # encode
@@ -48,14 +48,14 @@ X_valid_r = X_valid.reshape(len(X_valid), 3128, 1)
 
 # 开始模型构建
 model = Sequential()
-model.add(Conv1D(nb_filter = 128, filter_length=8, input_shape=(3128, 1), padding = 'same'))
+model.add(Conv1D(nb_filter = 64, filter_length=3, input_shape=(3128, 1), padding = 'same'))
 model.add(Activation('relu'))
 
-model.add(Conv1D(nb_filter = 256, filter_length = 4, padding = 'same'))
-model.add(Activation('relu'))
+# model.add(Conv1D(nb_filter = 256, filter_length = 4, padding = 'same'))
+# model.add(Activation('relu'))
 
-model.add(Conv1D(nb_filter = 512, filter_length = 2, padding = 'same'))
-model.add(Activation('relu'))
+# model.add(Conv1D(nb_filter = 512, filter_length = 2, padding = 'same'))
+# model.add(Activation('relu'))
 
 model.add(MaxPool1D(pool_size = 4, strides = 2, padding = "same"))
 
@@ -64,10 +64,10 @@ model.add(MaxPool1D(pool_size = 4, strides = 2, padding = "same"))
 # model.add(MaxPool1D(pool_size = 5, strides = 1, padding = "same"))
 
 model.add(Flatten())
-# model.add(Dropout(0.4))
+model.add(Dropout(0.3))
 # model.add(Dense(activation='relu'))
 model.add(Dense(1024, activation='relu'))
-model.add(Dense(2048, activation = 'relu'))
+model.add(Dense(512, activation = 'relu'))
 model.add(Dense(nb_class))
 model.add(Activation('softmax'))
 y_train = np_utils.to_categorical(y_train, nb_class)
